@@ -1,0 +1,6 @@
+[book]
+authors = ["nitame"]
+language = "fr"
+multilingual = false
+src = "src"
+title = "Présentations et études sur wasm"
