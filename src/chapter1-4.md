@@ -13,7 +13,7 @@ Et si on se passait du browser...
 
 Comment on enlève le browser ?
 
-![Wasm kernel intéraction browser](./images/figure_3.png)
+![Wasm kernel intéraction browser](./images/figure-1-4a.png)
 Mouais un émulateur, pas fou fou comme solution. Heuresement des gens intelligents se sont dit la même chose et c'est
 comme cela qu'est né Web Assembly System Interface (abrégé par WASI)
 
@@ -22,7 +22,7 @@ WASI règle 2 problèmes :
 * la portabilité (plus besion de browser)
 * la sécurité (avec une interface qui ne donne accès qu'à certaines fonctionnalités du kernel)
 
-![portabilité web assembly](./images/figure_4.png)
+![portabilité web assembly](./images/figure-1-4b.png)
 
 ### compute@edge 🌐 💻 compute everywhere
 

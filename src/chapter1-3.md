@@ -3,7 +3,7 @@
 ### JS vs Wasm
 
 Comparaison d'un projet JS simple avec un projet qui utilise un module Wasm
-![schéma de comparaison JS/Wasm](./images/figure_2.png)
+![schéma de comparaison JS/Wasm](./images/figure-1-3a.png)
 
 Il est assez flagrant que de développer un module Wasm en rust ajoute beaucoup d'étapes et de code sur un projet. Pour
 s'en convaincre, il suffit de suivre le tuto

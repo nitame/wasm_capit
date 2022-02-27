@@ -1,6 +1,6 @@
 ## Comment ça fonctionne ?
 
-![fonctionnement basique de Wasm](./images/figure_1.png)
+![fonctionnement basique de Wasm](./images/figure-1-2a.png)
 
 De manière très simplifié, les étapes pour avoir du code de n'importe quel langage, qui soit exécuté par le browser de
 façon native, peut se décomposer en 4 étapes :
