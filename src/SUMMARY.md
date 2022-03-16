@@ -9,6 +9,7 @@
   - [Vers l'infini et au-delà](./chapter1-4.md)
   - [Wasm : c'est le turfu ou encore un truc de hipster ?](./chapter1-5.md)
 - [wasm 101](./chapter2-0.md)
-  - [Wasm, wat, wasi](./chapter2-1.md)
+  - [Rust+Wasm](./chapter2-1.md)
+  - [Les outils Rust+Wasm](./chapter2-2.md)
 
 [Liens et sources](./bibliographie.md)

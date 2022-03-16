@@ -16,9 +16,9 @@ fonctionnent bien.
 
 #### 🛠️ Prérequis 🛠️
 
-- Avoir installer rustup, rustc, cargo. Si ce n'est pas déjà fait suivre les
+- Avoir installé rustup, rustc, cargo. Si ce n'est pas déjà fait suivre les
   instructions [ici](https://www.rust-lang.org/tools/install).
-- Avoir ajouté la targert wasm32-unknown-unknown aves rustup, si ce n'est pas déjà fait, lancer la
+- Avoir ajouté la target wasm32-unknown-unknown aves rustup, si ce n'est pas déjà fait, lancer la
   commande `rustup target add wasm32-unknown-unknown` dans un terminal
 
 #### 🚧 Commencer le projet 🚧
@@ -34,7 +34,13 @@ fn answer() -> u32 {
 }
 ```
 
-puis construire l'artéfact wasm avec la commande suivante :
+Ajouter la configuration suivante dans le fichier Cargo.toml :
+```toml
+[lib]
+crate-type = ["cdylib"]
+```
+
+Puis construire l'artéfact wasm avec la commande suivante :
 `cargo build --target wasm32-unknown-unknown --release`
 
 Cela produit le binaire wasm dans le dossier target
