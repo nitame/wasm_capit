@@ -12,9 +12,9 @@ passant par Wasm. Voici quelques outils à connaître.
 #### wasm-pack
 
 wasm-pack se définit comme un Wasm workflow tool. Il peut
-être [installer](https://rustwasm.github.io/wasm-pack/installer/) très facilement en ligne de commande. Il faut au
+être [installé](https://rustwasm.github.io/wasm-pack/installer/) très facilement en ligne de commande. Il faut au
 préalable avoir installé Rust. wasm-pack est très pratique pour créer, construire, tester et publier des modules wasm à
-partir de code Rust. Et de les intégrer à l'écosystème Javascript et dans le navigateur. Cela permet notamment de créer
+partir de code Rust. Et les intégrer à l'écosystème Javascript et dans le navigateur. Cela permet notamment de créer
 des modules Wasm et de les importer comme s'il s'agissait de paquets JS directement dans des projets web sans se
 préoccuper de l'API WebAssembly.
 
@@ -155,4 +155,4 @@ un module NPM. La preuve par le code :
 ```
 
 Et lorsqu'un serveur est lancé pour servir le fichier HTML et que l'on ouvre le navigateur. Il y a bien une fenêtre
-prompt qui demande d'insérer un nom puis une fenêtre alert qui affiche un greeting avec le nom. 
+prompt qui demande d'insérer un nom puis une fenêtre alert qui affiche un greeting avec le nom.
