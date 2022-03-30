@@ -12,5 +12,6 @@
   - [Rust+Wasm](./chapter2-1.md)
   - [Les outils Rust+Wasm](./chapter2-2.md)
   - [Wasm sans le navigateur](./chapter2-3.md)
+  - [Synthèse sur l'outillage](./chapter2-4.md)
 
 [Liens et sources](./bibliographie.md)

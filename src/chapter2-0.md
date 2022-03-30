@@ -3,6 +3,7 @@
 ### WASM, WAT, WASI, ... ???
 
 ![étapes de compilation](./images/figure-2-0a.png)
+L'illustration ci-dessus montre les étapes qui permettent de passer du code au binaire à execution par une runtime.
 
 ### WebAssembly
 

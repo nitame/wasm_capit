@@ -48,7 +48,7 @@ runtime) sur une machine sans passer par le navigateur.
 
 #### 🚧 Coder le projet 🚧
 
-Lancer la commande `cargo new simple-example-with-wasmer`. Cela créer le projet, cette fois il ne s'agit pas d'une lib
+Lancer la commande `cargo new simple-example-with-wasmer`. Cela créer le projet, cette fois, il ne s'agit pas d'une lib
 rust mais d'un exécutable. Le point d'entré est le fichier `main` et la fonction `main` va être exportée par défaut dans
 la target wasm.
 
@@ -64,7 +64,7 @@ fn main() {
 }
 ```
 
-My, my, my! C'est du code Rust, pas de macro pour interagir avec le runtime wasm. On se sent comme à la maison, en
+My, my! C'est du code Rust, pas de macro pour interagir avec le runtime wasm. On se sent comme à la maison, en
 charentaises et en peignoir au coin du feu.
 
 Pas de spécificité dans le `Cargo.toml` non plus :
