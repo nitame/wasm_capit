@@ -1,11 +1,11 @@
 ## Comment ça fonctionne ?
 
-![fonctionnement basique de Wasm](./images/figure_1.png)
+![fonctionnement basique de Wasm](./images/figure-1-2a.png)
 
-De manière très simplifié, les étapes pour avoir du code de n'importe quel langage, qui soit exécuté par le browser de
+De manière très simplifiée, les étapes pour avoir du code de n'importe quel langage, qui soit exécuté par le browser de
 façon native, peut se décomposer en 4 étapes :
 
-1. Récuperer/écrire du code (c, c++, rust)
+1. Récupérer/écrire du code (c, c++, rust)
 2. Transcrire le code (c, c++, rust) en un binaire Wasm. De nombreux outils sont déjà disponibles
    (emscriptem, wasm_pack)
 3. Importer le .wasm dans un fichier JS
@@ -37,7 +37,7 @@ Avec le lien dans le package.json
 
 ```
 
-et l'import dans le JS
+Et l'import dans le JS
 
 ```javascript
 import * as wasm from "wasm-module";

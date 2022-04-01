@@ -11,7 +11,7 @@ rendu de formulaire HTML ça fonctionnait plutôt bien.
 
 **2008 : chrome, moteur v8**
 
-Avec des sites web qui nécéssitaient toujours plus de fonctionnalités d'affichage, les perfs en JS devenaient un sujet.
+Avec des sites web qui nécessitaient toujours plus de fonctionnalités d'affichage, les perfs en JS devenaient un sujet.
 Google avec son browser chrome et le moteur v8, qui permet de faire de la compilation JIT de JS, apporte des niveaux de
 performances assez incroyables et ouvre la voie à ce que va devenir JS et l'écosystème web que l'on connaît aujourd'hui.
 

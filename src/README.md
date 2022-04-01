@@ -1,4 +1,4 @@
-# Introduction : Wasm en (1)5 minutes
+# Introduction
 
 L'objectif de ces notes est de présenter rapidement Web Assembly (Wasm) sans trop descendre dans les mécanismes internes
 de la spec et des outils.
