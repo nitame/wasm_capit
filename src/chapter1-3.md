@@ -8,7 +8,7 @@ Comparaison d'un projet JS simple avec un projet qui utilise un module Wasm
 Il est assez flagrant que de développer un module Wasm en rust ajoute beaucoup d'étapes et de code sur un projet. Pour
 s'en convaincre, il suffit de suivre le tuto
 [rust to Wasm](https://developer.mozilla.org/en-US/docs/WebAssembly/Rust_to_wasm) et de regarder le nombre de fichiers
-nécéssaires à un simple "hello world"
+nécessaires à un simple "hello world"
 
 Voici à quoi ressemble l'arborescence
 
@@ -30,7 +30,7 @@ hello-wasm/
 ### Pourquoi ?
 
 Bon c'est sûr que si on compare un projet JS avec webpack à un projet rust + Wasm, l'overhead du projet rust + Wasm
-paraît plus raisonnable. Mais quand même, pourquoi on s'enmerderait à faire du Wasm alors que ça complexifie le process
+paraît plus raisonnable. Mais quand même, pourquoi on s'emmerderait à faire du Wasm alors que ça complexifie le process
 de dev.
 
 Qu'est qui justifie d'accepter cette complexité ?

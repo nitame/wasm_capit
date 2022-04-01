@@ -10,12 +10,12 @@
 * les flottants 32 bit
 * les flottants 64 bit
 
-donc pour bosser sur des chaînes de caractères en UTF-8 par exemple, on est obligé de passer par de l'encodage avec des
-entiers et des vecteurs. Mais rassurons nous des gens très bien ont commencé à travailler là dessus pour nous proposer
+Donc pour bosser sur des chaînes de caractères en UTF-8 par exemple, on est obligé de passer par de l'encodage avec des
+entiers et des vecteurs. Mais rassurons-nous des gens très bien ont commencé à travailler là-dessus pour nous proposer
 des runtimes ([wasmitme](https://wasmtime.dev/), [wasmer](https://wasmer.io/)) qui embarque de plus en plus de
 fonctionnalités.
 
-### L'outillage ? pas encore assez mature
+### L'outillage ? Pas encore assez mature
 
 ### Les bindings. Il faut parfois réécrire du code bas niveau pour utiliser des librairies existantes
 

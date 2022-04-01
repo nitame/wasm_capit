@@ -13,7 +13,7 @@ fichiers .wasm et aux manières de produire ce binaire.
 
 ### WebAssembly text format
 
-WebAssembly Text Format abbrégé par WAT, est une representation textuelle du binaire Wasm compréhensible et éditable par
+WebAssembly Text Format abrégé par WAT, est une representation textuelle du binaire Wasm compréhensible et éditable par
 des humains. WAT est basé sur les S-expressions.
 
 ### WebAssembly system interface

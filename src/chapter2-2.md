@@ -1,4 +1,4 @@
-## Utiliser les outils pour intéragir avec le moteur Javascript
+## Utiliser les outils pour interagir avec le moteur Javascript
 
 L'interfaçage entre le code Rust et les fonctionnalités du navigateur peuvent-être pénibles à mettre en place si le
 projet ne se base pas sur de l'outillage permettant de faire la glue entre Rust, Wasm et Javascript. C'est là que
@@ -20,7 +20,7 @@ préoccuper de l'API WebAssembly.
 
 #### wasm-bindgen
 
-wasm-bindgen est un utilitaire qui permet de s'interfacer avec l'API JS du navigateur. l'avantage d'utiliser
+wasm-bindgen est un utilitaire qui permet de s'interfacer avec l'API JS du navigateur. L'avantage d'utiliser
 wasm-bindgen est que de nombreuses fonctionnalités natives du navigateur sont déjà implémentées et prêtes à l'emploi
 dans le code Rust. Cela évite d'avoir à écrire des bindings bas niveau pour accéder au DOM par exemple.
 
@@ -155,4 +155,4 @@ un module NPM. La preuve par le code :
 ```
 
 Et lorsqu'un serveur est lancé pour servir le fichier HTML et que l'on ouvre le navigateur. Il y a bien une fenêtre
-prompt qui demande d'insérer un nom puis une fenêtre alert qui affiche un greeting avec le nom.
+`prompt` qui demande d'insérer un nom puis une fenêtre alert qui affiche un greeting avec le nom.

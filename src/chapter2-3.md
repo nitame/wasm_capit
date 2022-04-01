@@ -37,7 +37,7 @@ portabilité générique et assurer de la stabilité pour les outils qui s'appui
 
 ### Exemple avec du code
 
-Enfin ! Nous allons pouvoir lancer un programme écrit en rust, compilé en binaire wasm et exécuter par wasmer (wasm
+Enfin ! Nous allons pouvoir lancer un programme écrit en rust, compilé en binaire wasm et exécuter par wasmer(wasm
 runtime) sur une machine sans passer par le navigateur.
 
 #### 🛠️ Prérequis 🛠️
