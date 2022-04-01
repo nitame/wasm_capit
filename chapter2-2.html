@@ -1,0 +1,311 @@
+<!DOCTYPE HTML>
+<html lang="fr" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Les outils Rust+Wasm - Présentations et études sur wasm</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Introduction</a></li><li class="chapter-item expanded "><a href="chapter1-0.html"><strong aria-hidden="true">1.</strong> wasm en 5 minutes</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter1-1.html"><strong aria-hidden="true">1.1.</strong> Il était une fois Wasm</a></li><li class="chapter-item expanded "><a href="chapter1-2.html"><strong aria-hidden="true">1.2.</strong> Comment ça fonctionne ?</a></li><li class="chapter-item expanded "><a href="chapter1-3.html"><strong aria-hidden="true">1.3.</strong> Ça complexifie le dev web, pourquoi on devrait s'embêter ?</a></li><li class="chapter-item expanded "><a href="chapter1-4.html"><strong aria-hidden="true">1.4.</strong> Vers l'infini et au-delà</a></li><li class="chapter-item expanded "><a href="chapter1-5.html"><strong aria-hidden="true">1.5.</strong> Wasm : c'est le turfu ou encore un truc de hipster ?</a></li></ol></li><li class="chapter-item expanded "><a href="chapter2-0.html"><strong aria-hidden="true">2.</strong> wasm 101</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter2-1.html"><strong aria-hidden="true">2.1.</strong> Rust+Wasm</a></li><li class="chapter-item expanded "><a href="chapter2-2.html" class="active"><strong aria-hidden="true">2.2.</strong> Les outils Rust+Wasm</a></li><li class="chapter-item expanded "><a href="chapter2-3.html"><strong aria-hidden="true">2.3.</strong> Wasm sans le navigateur</a></li><li class="chapter-item expanded "><a href="chapter2-4.html"><strong aria-hidden="true">2.4.</strong> Synthèse sur l'outillage</a></li></ol></li><li class="chapter-item expanded "><a href="bibliographie.html">Liens et sources</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Présentations et études sur wasm</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="utiliser-les-outils-pour-interagir-avec-le-moteur-javascript"><a class="header" href="#utiliser-les-outils-pour-interagir-avec-le-moteur-javascript">Utiliser les outils pour interagir avec le moteur Javascript</a></h2>
+<p>L'interfaçage entre le code Rust et les fonctionnalités du navigateur peuvent-être pénibles à mettre en place si le
+projet ne se base pas sur de l'outillage permettant de faire la glue entre Rust, Wasm et Javascript. C'est là que
+wasm-pack vient à la rescousse.</p>
+<h3 id="loutillage"><a class="header" href="#loutillage">L'outillage</a></h3>
+<p>Grâce à l'outillage Rust+Wasm, il est possible de coder des projets en Rust et de les utiliser dans un projet web en
+passant par Wasm. Voici quelques outils à connaître.</p>
+<h4 id="wasm-pack"><a class="header" href="#wasm-pack">wasm-pack</a></h4>
+<p>wasm-pack se définit comme un Wasm workflow tool. Il peut
+être <a href="https://rustwasm.github.io/wasm-pack/installer/">installé</a> très facilement en ligne de commande. Il faut au
+préalable avoir installé Rust. wasm-pack est très pratique pour créer, construire, tester et publier des modules wasm à
+partir de code Rust. Et les intégrer à l'écosystème Javascript et dans le navigateur. Cela permet notamment de créer
+des modules Wasm et de les importer comme s'il s'agissait de paquets JS directement dans des projets web sans se
+préoccuper de l'API WebAssembly.</p>
+<h4 id="wasm-bindgen"><a class="header" href="#wasm-bindgen">wasm-bindgen</a></h4>
+<p>wasm-bindgen est un utilitaire qui permet de s'interfacer avec l'API JS du navigateur. L'avantage d'utiliser
+wasm-bindgen est que de nombreuses fonctionnalités natives du navigateur sont déjà implémentées et prêtes à l'emploi
+dans le code Rust. Cela évite d'avoir à écrire des bindings bas niveau pour accéder au DOM par exemple.</p>
+<h3 id="un-projet-rust-avec-wasm-pack-et-wasm-bindgen"><a class="header" href="#un-projet-rust-avec-wasm-pack-et-wasm-bindgen">Un projet Rust avec wasm-pack et wasm-bindgen</a></h3>
+<p>Reprenons l'exemple de notre projet précédent, un simple greeting, qui prendrait en input un nom. Mais cette fois-ci, il
+sera intéressant d'utiliser des fonctionnalités du navigateur comme <code>alert</code> et <code>prompt</code>.</p>
+<p>Voici le code Rust :</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use wasm_bindgen::prelude::*;
+
+#[wasm_bindgen]
+extern &quot;C&quot; {
+    fn alert(s: &amp;str);
+    fn prompt(s: &amp;str) -&gt; String;
+}
+
+#[wasm_bindgen]
+pub fn hi_mate() {
+    let name = prompt(&quot;What's ye name?&quot;);
+    alert(&amp;format!(&quot;Ho hi, {}!&quot;, name));
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Et les dépendances dans Cargo.toml :</p>
+<pre><code class="language-toml">[dependencies]
+wasm-bindgen = &quot;0.2.79&quot;
+
+[lib]
+crate-type = [&quot;cdylib&quot;]
+</code></pre>
+<p>La macro <code>#[wasm_bindgen]</code> positionnée au-dessus de <code>extern &quot;C&quot;</code>sert à importer des fonctions JS dans le code Rust. Ce
+qu'il faut comprendre c'est que l'on n'importe pas réellement les fonctions. Mais que des bindings ont été codé en Rust
+pour pouvoir interagir avec l'API JS du navigateur. Et que lorsque le module wasm sera exécuté par le navigateur il fera
+bien appel à la fonction <code>window.alert()</code>.</p>
+<p>Pour voir à quoi ressemble ces bindings il faut aller voir l'API de la
+lib <a href="https://docs.rs/web-sys/latest/web_sys/struct.Window.html#method.alert">web-sys</a> (qui est une dependence de
+wasm-bindgen)</p>
+<p>Extrait du code source de web-sys :</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[wasm_bindgen(catch, method, structural, js_class = &quot;Window&quot;, js_name = alert)]
+#[doc = &quot;The `alert()` method.&quot;]
+#[doc = &quot;&quot;]
+#[doc = &quot;[MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/API/Window/alert)&quot;]
+#[doc = &quot;&quot;]
+#[doc = &quot;*This API requires the following crate features to be activated: `Window`*&quot;]
+pub fn alert(this: &amp;Window) -&gt; Result&lt;(), JsValue&gt;;
+<span class="boring">}
+</span></code></pre></pre>
+<p>La macro <code>#[wasm_bindgen]</code> placée au-dessus de <code>pub fn hi_mate()</code> sert à exporter la fonction Rust pour qu'elle puisse
+être utilisée par le navigateur. D'ailleurs, c'est ce que nous allons voir maintenant. Pour utiliser la
+fonction <code>hi_mate</code> il faut importer le module wasm dans un script JS.</p>
+<p>wasm-pack permet de build un module wasm de différentes manières, celle utilisée ici est la target web.
+<code>wasm-pack build --target web</code>
+Cela produit un dossier <code>pkg</code> avec les fichiers suivants :</p>
+<pre><code class="language-text">pkg
+├── package.json
+├── simple_example_with_wasm_pack.d.ts
+├── simple_example_with_wasm_pack.js
+├── simple_example_with_wasm_pack_bg.wasm
+└── simple_example_with_wasm_pack_bg.wasm.d.ts
+</code></pre>
+<p>Ce qui est intéressant, c'est le fichier .js, on peut voir que la fonction init est exportée et que toute la glue qui
+permet de charger le binaire wasm avec l'API <code>WebAssembly</code> est déjà généré de façon optimisée.</p>
+<pre><code class="language-javascript">export function hi_mate() {
+    wasm.hi_mate();
+}
+
+async function load(module, imports) {
+    if (typeof Response === 'function' &amp;&amp; module instanceof Response) {
+        if (typeof WebAssembly.instantiateStreaming === 'function') {
+            try {
+                return await WebAssembly.instantiateStreaming(module, imports);
+
+            } catch (e) {
+                // ...
+            }
+        }
+
+        const bytes = await module.arrayBuffer();
+        return await WebAssembly.instantiate(bytes, imports);
+        // ...
+    }
+}
+
+async function init(input) {
+    if (typeof input === 'undefined') {
+        input = new URL('simple_example_with_wasm_pack_bg.wasm', import.meta.url);
+    }
+    // ...
+    if (typeof input === 'string' || (typeof Request === 'function' &amp;&amp; input instanceof Request) || (typeof URL === 'function' &amp;&amp; input instanceof URL)) {
+        input = fetch(input);
+    }
+
+    const {instance, module} = await load(await input, imports);
+
+    wasm = instance.exports;
+    init.__wbindgen_wasm_module = module;
+
+    return wasm;
+}
+
+export default init;
+</code></pre>
+<p>Ce qui permet d'importer la function <code>hi_mate</code> dans notre script JS comme s'il s'agissait d'une fonction exportée depuis
+un module NPM. La preuve par le code :</p>
+<pre><code class="language-html">
+&lt;script type=&quot;module&quot;&gt;
+    import init, {hi_mate} from &quot;./pkg/simple_example_with_wasm_pack.js&quot;;
+
+    init().then(() =&gt; {
+        hi_mate()
+    });
+&lt;/script&gt;
+</code></pre>
+<p>Et lorsqu'un serveur est lancé pour servir le fichier HTML et que l'on ouvre le navigateur. Il y a bien une fenêtre
+<code>prompt</code> qui demande d'insérer un nom puis une fenêtre alert qui affiche un greeting avec le nom.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="chapter2-1.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="chapter2-3.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="chapter2-1.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="chapter2-3.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>

@@ -1,0 +1,750 @@
+<!DOCTYPE HTML>
+<html lang="fr" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Présentations et études sur wasm</title>
+        <meta name="robots" content="noindex" />
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Introduction</a></li><li class="chapter-item expanded "><a href="chapter1-0.html"><strong aria-hidden="true">1.</strong> wasm en 5 minutes</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter1-1.html"><strong aria-hidden="true">1.1.</strong> Il était une fois Wasm</a></li><li class="chapter-item expanded "><a href="chapter1-2.html"><strong aria-hidden="true">1.2.</strong> Comment ça fonctionne ?</a></li><li class="chapter-item expanded "><a href="chapter1-3.html"><strong aria-hidden="true">1.3.</strong> Ça complexifie le dev web, pourquoi on devrait s'embêter ?</a></li><li class="chapter-item expanded "><a href="chapter1-4.html"><strong aria-hidden="true">1.4.</strong> Vers l'infini et au-delà</a></li><li class="chapter-item expanded "><a href="chapter1-5.html"><strong aria-hidden="true">1.5.</strong> Wasm : c'est le turfu ou encore un truc de hipster ?</a></li></ol></li><li class="chapter-item expanded "><a href="chapter2-0.html"><strong aria-hidden="true">2.</strong> wasm 101</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="chapter2-1.html"><strong aria-hidden="true">2.1.</strong> Rust+Wasm</a></li><li class="chapter-item expanded "><a href="chapter2-2.html"><strong aria-hidden="true">2.2.</strong> Les outils Rust+Wasm</a></li><li class="chapter-item expanded "><a href="chapter2-3.html"><strong aria-hidden="true">2.3.</strong> Wasm sans le navigateur</a></li><li class="chapter-item expanded "><a href="chapter2-4.html"><strong aria-hidden="true">2.4.</strong> Synthèse sur l'outillage</a></li></ol></li><li class="chapter-item expanded "><a href="bibliographie.html">Liens et sources</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Présentations et études sur wasm</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
+<p>L'objectif de ces notes est de présenter rapidement Web Assembly (Wasm) sans trop descendre dans les mécanismes internes
+de la spec et des outils.</p>
+<p>À l'issue de cette lecture, j'espère que vous repartirez avec une compréhension générale de ce qu'est Wasm. De ce que
+cela peut apporter au développement web, mais pas seulement. De ce à quoi cela peut servir et les limitations que ça
+lève. Ainsi que des points d'améliorations qu'il reste à traiter avant que Wasm puisse devenir une norme répandue et
+utilisée.</p>
+<p>À titre personnel, je pense que Wasm est destiné à prendre de plus en plus de place dans le développement de logiciel.
+Cela transpire certainement dans ces notes, l'idée dernière n'est pourtant pas de convaincre ou de rallier à la cause
+Wasm. Pour cela il faudrait s'appuyer sur des études, articles ou publications beaucoup plus factuels. Mais simplement
+d'inviter à la reflexion sur ce que peut apporter Wasm dans l'IT.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="web-assembly"><a class="header" href="#web-assembly">Web Assembly</a></h2>
+<p>Web Assembly c'est ni du web ni de l'assembly. Alors qu'est-ce que c'est ?</p>
+<p><strong>Vous avez 5 minutes ?</strong></p>
+<p>Alors c'est parti pour une explication rapide et imprécise de ce qu'est Web assembly...</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="il-était-une-fois-wasm"><a class="header" href="#il-était-une-fois-wasm">Il était une fois Wasm</a></h2>
+<p><strong>1989 : WWW</strong></p>
+<p>Tim Berner Lee invente le world wide web</p>
+<p><strong>1995 : javascript</strong></p>
+<p>Javascript a été créé en 10 jours par Brendan Eich. Le langage n'était pas sans défaut, surtout côté perf, mais pour le
+rendu de formulaire HTML ça fonctionnait plutôt bien.</p>
+<p><strong>2008 : chrome, moteur v8</strong></p>
+<p>Avec des sites web qui nécessitaient toujours plus de fonctionnalités d'affichage, les perfs en JS devenaient un sujet.
+Google avec son browser chrome et le moteur v8, qui permet de faire de la compilation JIT de JS, apporte des niveaux de
+performances assez incroyables et ouvre la voie à ce que va devenir JS et l'écosystème web que l'on connaît aujourd'hui.</p>
+<p><strong>2015 : Wasm</strong></p>
+<p>Web Assembly permet d'exécuter du code écrit dans d'autres langages que JS, dans le browser comme s'il s'agissait de
+modules natifs. Dit autrement, cela permet d'écrire du code en <em>c, c++, rust, etc.</em> qui va être exécuté par le browser
+et d'avoir le même niveau de performance que s'il était exécuté nativement sur une machine.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="comment-ça-fonctionne-"><a class="header" href="#comment-ça-fonctionne-">Comment ça fonctionne ?</a></h2>
+<p><img src="./images/figure-1-2a.png" alt="fonctionnement basique de Wasm" /></p>
+<p>De manière très simplifiée, les étapes pour avoir du code de n'importe quel langage, qui soit exécuté par le browser de
+façon native, peut se décomposer en 4 étapes :</p>
+<ol>
+<li>Récupérer/écrire du code (c, c++, rust)</li>
+<li>Transcrire le code (c, c++, rust) en un binaire Wasm. De nombreux outils sont déjà disponibles
+(emscriptem, wasm_pack)</li>
+<li>Importer le .wasm dans un fichier JS</li>
+<li>Utiliser le code (c, c++, rust) dans le navigateur</li>
+</ol>
+<h3 id="quelques-précisions-sur-limport-en-js"><a class="header" href="#quelques-précisions-sur-limport-en-js">Quelques précisions sur l'import en JS</a></h3>
+<p>Pour importer un module Wasm dans un fichier JS. La lib standard JS expose le module WebAssembly qui permet de charger
+le module Wasm sans trop de code</p>
+<pre><code class="language-javascript">WebAssembly.compileStreaming(fetch('simple.wasm'))
+    .then(function (mod) {
+        var imports = WebAssembly.Module.imports(mod);
+        console.log(imports[0]);
+    });
+</code></pre>
+<p>Ou en utilisant npm</p>
+<p>Avec le lien dans le package.json</p>
+<pre><code class="language-json">{
+  &quot;dependencies&quot;: {
+    &quot;wasm-module&quot;: &quot;file:path/to/module&quot;
+  }
+}
+
+</code></pre>
+<p>Et l'import dans le JS</p>
+<pre><code class="language-javascript">import * as wasm from &quot;wasm-module&quot;;
+
+wasm.greet();
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="Ça-complexifie-le-dev-web-pourquoi-on-devrait-sembêter-"><a class="header" href="#Ça-complexifie-le-dev-web-pourquoi-on-devrait-sembêter-">Ça complexifie le dev web, pourquoi on devrait s'embêter ?</a></h2>
+<h3 id="js-vs-wasm"><a class="header" href="#js-vs-wasm">JS vs Wasm</a></h3>
+<p>Comparaison d'un projet JS simple avec un projet qui utilise un module Wasm
+<img src="./images/figure-1-3a.png" alt="schéma de comparaison JS/Wasm" /></p>
+<p>Il est assez flagrant que de développer un module Wasm en rust ajoute beaucoup d'étapes et de code sur un projet. Pour
+s'en convaincre, il suffit de suivre le tuto
+<a href="https://developer.mozilla.org/en-US/docs/WebAssembly/Rust_to_wasm">rust to Wasm</a> et de regarder le nombre de fichiers
+nécessaires à un simple &quot;hello world&quot;</p>
+<p>Voici à quoi ressemble l'arborescence</p>
+<pre><code class="language-text">hello-wasm/
+├── Cargo.lock
+├── Cargo.toml
+├── index.html
+├── pkg
+│  ├── hello_wasm.d.ts
+│  ├── hello_wasm.js
+│  ├── hello_wasm_bg.wasm
+│  ├── hello_wasm_bg.wasm.d.ts
+│  └── package.json
+└── src
+   └── lib.rs
+</code></pre>
+<h3 id="pourquoi-"><a class="header" href="#pourquoi-">Pourquoi ?</a></h3>
+<p>Bon c'est sûr que si on compare un projet JS avec webpack à un projet rust + Wasm, l'overhead du projet rust + Wasm
+paraît plus raisonnable. Mais quand même, pourquoi on s'emmerderait à faire du Wasm alors que ça complexifie le process
+de dev.</p>
+<p>Qu'est qui justifie d'accepter cette complexité ?</p>
+<details>
+  <summary>Réponse</summary>
+<blockquote>
+<p>La vitesse ! Mettez vos lunettes, ça va vite, très très vite</p>
+</blockquote>
+</details>
+<p>En gros, Wasm est la réponse quand on a besoin d'avoir un code avec de la computation lourde optimisé aux petits oignons
+et que JS ne permet pas d'atteindre le niveau d'optimisation/performance désiré.</p>
+<p>L'autre énorme avantage de Wasm est que l'on peut porter un logiciel codé en c++ par exemple directement dans le
+navigateur, sans avoir à réécrire tout le logiciel en JS.</p>
+<p>Un exemple concret ? <a href="https://madewithwebassembly.com/showcase/autocad/">Autocad</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="vers-linfini-et-au-delà--"><a class="header" href="#vers-linfini-et-au-delà--">Vers l'infini et au-delà 🚀 🌌</a></h2>
+<p>Wasm permet d'apporter des performances et des optimisations qui ne pouvaient être atteintes jusque-là. Et d'un point
+de vue portabilité tout ce dont on a besoin, c'est d'un browser. Alors ça veut dire que l'on peut lancer des programmes
+sur n'importe quel machine, même sur des serveurs ?</p>
+<p>Eh bien oui, mais à condition qu'il y ait un browser d'installer. Et sur une machine qui n'a pas beaucoup de capacité de
+calcul et de mémoire, ce n'est pas si trivial.</p>
+<p>Et si on se passait du browser...</p>
+<h3 id="sabstraire-du-browser"><a class="header" href="#sabstraire-du-browser">S'abstraire du browser</a></h3>
+<p>Comment on enlève le browser ?</p>
+<p><img src="./images/figure-1-4a.png" alt="Wasm kernel intéraction browser" />
+Mouais un émulateur, pas &quot;fou fou&quot; comme solution. Heureusement des gens intelligents se sont dit la même chose et c'est
+comme cela qu'est né Web Assembly System Interface (abrégé par WASI)</p>
+<p>WASI règle 2 problèmes :</p>
+<ul>
+<li>la portabilité (plus besoin de browser)</li>
+<li>la sécurité (avec une interface qui ne donne accès qu'à certaines fonctionnalités du kernel)</li>
+</ul>
+<p><img src="./images/figure-1-4b.png" alt="portabilité web assembly" /></p>
+<h3 id="computeedge---compute-everywhere"><a class="header" href="#computeedge---compute-everywhere">compute@edge 🌐 💻 compute everywhere</a></h3>
+<p>Grâce à Wasm et WASI on peut écrire des programmes dans des langages performants et optimisés, et les faire tourner sur
+des browsers, des serveurs, des multitudes de devices. Tout ça de manière sécurisée et avec une bonne isolation pour
+gérer l'accès aux fonctions du kernel et au filesystem.</p>
+<p>Les 4 piliers du Web Assembly</p>
+<ul>
+<li>fast (plus rapide que docker, boot en nanosecondes)</li>
+<li>small (plus léger que docker)</li>
+<li>portable</li>
+<li>secure (meilleure isolation que docker qui partage le même host)
+et grâce à cela on peut imaginer déployer des programmes partout (client web, server, @edge)</li>
+</ul>
+<p>Les conteneurs sont morts vive <del>les conteneurs</del> WASI !</p>
+<h4 id="exemple-damazon-avec-prime-video"><a class="header" href="#exemple-damazon-avec-prime-video">exemple d'Amazon avec prime video</a></h4>
+<p>Amazon a utilisé Wasm pour cibler plus de <strong>8000 types de devices différents</strong> et améliorer les perfs de prime video au
+passage.</p>
+<blockquote>
+<p>The total memory consumption for the Wasm VM, including the module instance, environment, and the module itself is at most 7.5 megabytes.
+By moving these systems to Wasm, we have saved a total of 30 megabytes of JavaScript heap memory. Memory is a scarce resource on most of
+the devices we deploy on, so this is a welcome reduction.</p>
+</blockquote>
+<blockquote>
+<p>The binary size of our Wasm module is 150 kilobytes when compressed (750 kilobytes uncompressed, after symbol stripping).
+The module’s small size, coupled with the fast VM start time, means that the addition of Wasm doesn’t affect the app start-up time.</p>
+</blockquote>
+<p>Pour plus de détails voici
+l'<a href="https://www.amazon.science/blog/how-prime-video-updates-its-app-for-more-than-8-000-device-types">article</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="wasm--cest-le-turfu-ou-encore-un-truc-de-hipster-"><a class="header" href="#wasm--cest-le-turfu-ou-encore-un-truc-de-hipster-">Wasm : c'est le turfu ou encore un truc de hipster ?</a></h2>
+<details>
+    <summary>Le(s) point(s) faible(s) de Wasm</summary>
+<h3 id="wasm-ne-supporte-que-4-types-de-donnée"><a class="header" href="#wasm-ne-supporte-que-4-types-de-donnée">Wasm ne supporte que 4 types de donnée</a></h3>
+<ul>
+<li>les entiers 32 bit</li>
+<li>les entiers 64 bit</li>
+<li>les flottants 32 bit</li>
+<li>les flottants 64 bit</li>
+</ul>
+<p>Donc pour bosser sur des chaînes de caractères en UTF-8 par exemple, on est obligé de passer par de l'encodage avec des
+entiers et des vecteurs. Mais rassurons-nous des gens très bien ont commencé à travailler là-dessus pour nous proposer
+des runtimes (<a href="https://wasmtime.dev/">wasmitme</a>, <a href="https://wasmer.io/">wasmer</a>) qui embarque de plus en plus de
+fonctionnalités.</p>
+<h3 id="loutillage--pas-encore-assez-mature"><a class="header" href="#loutillage--pas-encore-assez-mature">L'outillage ? Pas encore assez mature</a></h3>
+<h3 id="les-bindings-il-faut-parfois-réécrire-du-code-bas-niveau-pour-utiliser-des-librairies-existantes"><a class="header" href="#les-bindings-il-faut-parfois-réécrire-du-code-bas-niveau-pour-utiliser-des-librairies-existantes">Les bindings. Il faut parfois réécrire du code bas niveau pour utiliser des librairies existantes</a></h3>
+</details><div style="break-before: page; page-break-before: always;"></div><h2 id="wasm-101"><a class="header" href="#wasm-101">Wasm 101</a></h2>
+<h3 id="wasm-wat-wasi--"><a class="header" href="#wasm-wat-wasi--">WASM, WAT, WASI, ... ???</a></h3>
+<p><img src="./images/figure-2-0a.png" alt="étapes de compilation" />
+L'illustration ci-dessus montre les étapes qui permettent de passer du code au binaire à execution par une runtime.</p>
+<h3 id="webassembly"><a class="header" href="#webassembly">WebAssembly</a></h3>
+<p>Quand on parle de Wasm, cela peut faire référence à la spec du format d'instruction binaire, à la VM, ou encore aux
+fichiers binaires (.wasm) qui vont être exécutés par le moteur. Par la suite, nous allons nous intéressé surtout aux
+fichiers .wasm et aux manières de produire ce binaire.</p>
+<h3 id="webassembly-text-format"><a class="header" href="#webassembly-text-format">WebAssembly text format</a></h3>
+<p>WebAssembly Text Format abrégé par WAT, est une representation textuelle du binaire Wasm compréhensible et éditable par
+des humains. WAT est basé sur les S-expressions.</p>
+<h3 id="webassembly-system-interface"><a class="header" href="#webassembly-system-interface">WebAssembly system interface</a></h3>
+<p>WebAssembly System Interface abrégé par WASI, est une interface (comme son nom l'indique) qui permet de &quot;communiquer&quot;
+avec un OS conceptuel (à différencier d'un OS spécifique). WASI a pour but de proposer d'utiliser des binaires wasm pour
+interagir avec n'importe quel OS de façon standardisée.</p>
+<h3 id="webassembly-runtime"><a class="header" href="#webassembly-runtime">WebAssembly runtime</a></h3>
+<p>Pour pouvoir exécuter un binaire wasm sur une machine (device, server, ...) il manque une dernière brique. Un runtime
+qui permet de lancer les instructions contenues dans le binaire et interagir avec les différents process de la machine
+cible. Il existe plusieurs wasm runtimes : wasmtime, wasmer, etc.</p>
+<blockquote>
+<p>enough babbling! time to show the code.</p>
+</blockquote>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="compiler-un-langage-haut-niveau-vers-un-binaire-wasm"><a class="header" href="#compiler-un-langage-haut-niveau-vers-un-binaire-wasm">Compiler un langage haut niveau vers un binaire wasm</a></h2>
+<p>Pour la suite de cette démonstration, je vais utiliser Rust comme langage haut niveau. De nombreux langages possèdent
+déjà les outils pour permettre d'obtenir un binaire wasm (c/c++, javascript, Typescript, ...) pour les autres il s'agit
+certainement d'une question de temps.</p>
+<h3 id="pourquoi-rust-"><a class="header" href="#pourquoi-rust-">Pourquoi Rust ?</a></h3>
+<p>Je vous dirais bien que Rust possède des killer features comme le borrow-checker, une gestion mémoire au poil, du
+pattern matching et des macros hygiéniques. Rust a tout ça, mais si j'ai choisi Rust, c'est parce que je ne suis pas un
+bon développeur et que je ne sais pas écrire du c/c++ sans tomber sur une dangling pointer exception ou un crash sur un
+programme multi-thread que je suis incapable de debugger. Sans compter que les outils Rust+Wasm existent déjà et qu'ils
+fonctionnent bien.</p>
+<h3 id="salut-wasm-depuis-rust"><a class="header" href="#salut-wasm-depuis-rust">Salut Wasm, depuis Rust</a></h3>
+<h4 id="-prérequis-"><a class="header" href="#-prérequis-">🛠️ Prérequis 🛠️</a></h4>
+<ul>
+<li>Avoir installé rustup, rustc, cargo. Si ce n'est pas déjà fait suivre les
+instructions <a href="https://www.rust-lang.org/tools/install">ici</a>.</li>
+<li>Avoir ajouté la target wasm32-unknown-unknown aves rustup, si ce n'est pas déjà fait, lancer la
+commande <code>rustup target add wasm32-unknown-unknown</code> dans un terminal</li>
+</ul>
+<h4 id="-commencer-le-projet-"><a class="header" href="#-commencer-le-projet-">🚧 Commencer le projet 🚧</a></h4>
+<p>Lancer la commande <code>cargo new --lib simple-example-without-tools</code>. Cela créer le projet</p>
+<p>Dans le fichier <code>scr/lib.rs</code> ajouter le code suivant :</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[no_mangle]
+fn answer() -&gt; u32 {
+    42
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Ajouter la configuration suivante dans le fichier Cargo.toml :</p>
+<pre><code class="language-toml">[lib]
+crate-type = [&quot;cdylib&quot;]
+</code></pre>
+<p>Puis construire l'artéfact wasm avec la commande suivante :
+<code>cargo build --target wasm32-unknown-unknown --release</code></p>
+<p>Cela produit le binaire wasm dans le dossier target</p>
+<pre><code class="language-text">.
+├── Cargo.lock
+├── Cargo.toml
+├── index.html
+├── README.md
+├── src
+│  └── lib.rs
+└── target
+   ├── CACHEDIR.TAG
+   ├── release
+   │  ├── build
+   │  ├── deps
+   │  ├── examples
+   │  └── incremental
+   └── wasm32-unknown-unknown
+      ├── CACHEDIR.TAG
+      └── release
+         ├── build
+         ├── deps
+         │  ├── simple_example_without_tools.d
+         │  └── simple_example_without_tools.wasm
+         ├── examples
+         ├── incremental
+         ├── simple_example_without_tools.d
+         └── simple_example_without_tools.wasm &lt;-- voici le binaire Wasm
+</code></pre>
+<p>Dans un fichier HTML à la racine du projet, importer le binaire wasm avec une balise script</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;Title - simple rust wasm&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;script&gt;
+    WebAssembly.instantiateStreaming(fetch('target/wasm32-unknown-unknown/release/simple_example_without_tools.wasm'))
+            .then(obj =&gt; {
+                console.log('The answer is: ', obj.instance.exports.answer());
+            });
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>Dans le navigateur, en ouvrant le fichier HTML. La console du navigateur affiche bien la réponse.</p>
+<pre><code class="language-text">The answer is: 42
+</code></pre>
+<h4 id="-its-alive-"><a class="header" href="#-its-alive-">🙌 It's alive!!! 🙌</a></h4>
+<p>Pour résumer, voici les 2 étapes pour exécuter un binaire wasm dans le navigateur :</p>
+<ul>
+<li>compiler du code avec pour cible Wasm, il faut que les outils de compilation du langage supportent le standard wasm
+pour pouvoir exposer les fonctions avec les types de données gérés par Wasm.</li>
+<li>importer le code dans le navigateur, il faut que le navigateur intègre l'API WebAssembly qui permet d'interagir avec
+le binaire Wasm</li>
+</ul>
+<p>L'exemple de code ne montre pas les limitations de Wasm (Seulement 4 types de données int32, int64, float32, float64)
+pour les voir il faut jouer avec des types de données plus complexes. Par exemple les chaînes de caractères.</p>
+<p>Dans ce cas, il faut avoir un code rust qui ressemble à ça :</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::ffi::CString;
+use std::os::raw::c_char;
+
+#[no_mangle]
+fn hi_mate() -&gt; *const c_char {
+    let c_to_print = CString::new(&quot;Ho hi, mate!&quot;).expect(&quot;CString::new failed&quot;);
+    c_to_print.into_raw()
+}
+
+#[no_mangle]
+fn hi_mate_len() -&gt; usize {
+    &quot;Ho hi, mate!&quot;.len()
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Et un script dans le fichier HTML beaucoup plus verbeux :</p>
+<pre><code class="language-html">
+&lt;script&gt;
+    WebAssembly.instantiateStreaming(fetch('target/wasm32-unknown-unknown/release/simple_example_without_tools.wasm'))
+            .then(obj =&gt; {
+                const linearMemory = obj.instance.exports.memory;
+                const offset = obj.instance.exports.hi_mate();
+                const len = obj.instance.exports.hi_mate_len();
+                const stringBuffer = new Uint8Array(linearMemory.buffer, offset, len);
+                let str = '';
+                for (let i = 0; i &lt; stringBuffer.length; i++) {
+                    str += String.fromCharCode(stringBuffer[i]);
+                }
+                console.log(str);
+            });
+&lt;/script&gt;
+</code></pre>
+<p>Cela montre qu'il est tout à fait possible de passer outre les &quot;limitations&quot; dues aux 4 types de données utilisables dans
+le standard Wasm, mais que cela a un coût. Celui d'écrire de la glue assez bas niveau ne serait-ce que pour manipuler
+des chaînes de caractères.</p>
+<p>Mais pas de panique, il existe déjà des outils qui permettent d'écrire du code haut niveau sans se préoccuper des
+bindings entre Rust, Wasm et le moteur Javascript du navigateur. Ce sera l'exemple du prochain chapitre.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="utiliser-les-outils-pour-interagir-avec-le-moteur-javascript"><a class="header" href="#utiliser-les-outils-pour-interagir-avec-le-moteur-javascript">Utiliser les outils pour interagir avec le moteur Javascript</a></h2>
+<p>L'interfaçage entre le code Rust et les fonctionnalités du navigateur peuvent-être pénibles à mettre en place si le
+projet ne se base pas sur de l'outillage permettant de faire la glue entre Rust, Wasm et Javascript. C'est là que
+wasm-pack vient à la rescousse.</p>
+<h3 id="loutillage"><a class="header" href="#loutillage">L'outillage</a></h3>
+<p>Grâce à l'outillage Rust+Wasm, il est possible de coder des projets en Rust et de les utiliser dans un projet web en
+passant par Wasm. Voici quelques outils à connaître.</p>
+<h4 id="wasm-pack"><a class="header" href="#wasm-pack">wasm-pack</a></h4>
+<p>wasm-pack se définit comme un Wasm workflow tool. Il peut
+être <a href="https://rustwasm.github.io/wasm-pack/installer/">installé</a> très facilement en ligne de commande. Il faut au
+préalable avoir installé Rust. wasm-pack est très pratique pour créer, construire, tester et publier des modules wasm à
+partir de code Rust. Et les intégrer à l'écosystème Javascript et dans le navigateur. Cela permet notamment de créer
+des modules Wasm et de les importer comme s'il s'agissait de paquets JS directement dans des projets web sans se
+préoccuper de l'API WebAssembly.</p>
+<h4 id="wasm-bindgen"><a class="header" href="#wasm-bindgen">wasm-bindgen</a></h4>
+<p>wasm-bindgen est un utilitaire qui permet de s'interfacer avec l'API JS du navigateur. L'avantage d'utiliser
+wasm-bindgen est que de nombreuses fonctionnalités natives du navigateur sont déjà implémentées et prêtes à l'emploi
+dans le code Rust. Cela évite d'avoir à écrire des bindings bas niveau pour accéder au DOM par exemple.</p>
+<h3 id="un-projet-rust-avec-wasm-pack-et-wasm-bindgen"><a class="header" href="#un-projet-rust-avec-wasm-pack-et-wasm-bindgen">Un projet Rust avec wasm-pack et wasm-bindgen</a></h3>
+<p>Reprenons l'exemple de notre projet précédent, un simple greeting, qui prendrait en input un nom. Mais cette fois-ci, il
+sera intéressant d'utiliser des fonctionnalités du navigateur comme <code>alert</code> et <code>prompt</code>.</p>
+<p>Voici le code Rust :</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use wasm_bindgen::prelude::*;
+
+#[wasm_bindgen]
+extern &quot;C&quot; {
+    fn alert(s: &amp;str);
+    fn prompt(s: &amp;str) -&gt; String;
+}
+
+#[wasm_bindgen]
+pub fn hi_mate() {
+    let name = prompt(&quot;What's ye name?&quot;);
+    alert(&amp;format!(&quot;Ho hi, {}!&quot;, name));
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Et les dépendances dans Cargo.toml :</p>
+<pre><code class="language-toml">[dependencies]
+wasm-bindgen = &quot;0.2.79&quot;
+
+[lib]
+crate-type = [&quot;cdylib&quot;]
+</code></pre>
+<p>La macro <code>#[wasm_bindgen]</code> positionnée au-dessus de <code>extern &quot;C&quot;</code>sert à importer des fonctions JS dans le code Rust. Ce
+qu'il faut comprendre c'est que l'on n'importe pas réellement les fonctions. Mais que des bindings ont été codé en Rust
+pour pouvoir interagir avec l'API JS du navigateur. Et que lorsque le module wasm sera exécuté par le navigateur il fera
+bien appel à la fonction <code>window.alert()</code>.</p>
+<p>Pour voir à quoi ressemble ces bindings il faut aller voir l'API de la
+lib <a href="https://docs.rs/web-sys/latest/web_sys/struct.Window.html#method.alert">web-sys</a> (qui est une dependence de
+wasm-bindgen)</p>
+<p>Extrait du code source de web-sys :</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[wasm_bindgen(catch, method, structural, js_class = &quot;Window&quot;, js_name = alert)]
+#[doc = &quot;The `alert()` method.&quot;]
+#[doc = &quot;&quot;]
+#[doc = &quot;[MDN Documentation](https://developer.mozilla.org/en-US/docs/Web/API/Window/alert)&quot;]
+#[doc = &quot;&quot;]
+#[doc = &quot;*This API requires the following crate features to be activated: `Window`*&quot;]
+pub fn alert(this: &amp;Window) -&gt; Result&lt;(), JsValue&gt;;
+<span class="boring">}
+</span></code></pre></pre>
+<p>La macro <code>#[wasm_bindgen]</code> placée au-dessus de <code>pub fn hi_mate()</code> sert à exporter la fonction Rust pour qu'elle puisse
+être utilisée par le navigateur. D'ailleurs, c'est ce que nous allons voir maintenant. Pour utiliser la
+fonction <code>hi_mate</code> il faut importer le module wasm dans un script JS.</p>
+<p>wasm-pack permet de build un module wasm de différentes manières, celle utilisée ici est la target web.
+<code>wasm-pack build --target web</code>
+Cela produit un dossier <code>pkg</code> avec les fichiers suivants :</p>
+<pre><code class="language-text">pkg
+├── package.json
+├── simple_example_with_wasm_pack.d.ts
+├── simple_example_with_wasm_pack.js
+├── simple_example_with_wasm_pack_bg.wasm
+└── simple_example_with_wasm_pack_bg.wasm.d.ts
+</code></pre>
+<p>Ce qui est intéressant, c'est le fichier .js, on peut voir que la fonction init est exportée et que toute la glue qui
+permet de charger le binaire wasm avec l'API <code>WebAssembly</code> est déjà généré de façon optimisée.</p>
+<pre><code class="language-javascript">export function hi_mate() {
+    wasm.hi_mate();
+}
+
+async function load(module, imports) {
+    if (typeof Response === 'function' &amp;&amp; module instanceof Response) {
+        if (typeof WebAssembly.instantiateStreaming === 'function') {
+            try {
+                return await WebAssembly.instantiateStreaming(module, imports);
+
+            } catch (e) {
+                // ...
+            }
+        }
+
+        const bytes = await module.arrayBuffer();
+        return await WebAssembly.instantiate(bytes, imports);
+        // ...
+    }
+}
+
+async function init(input) {
+    if (typeof input === 'undefined') {
+        input = new URL('simple_example_with_wasm_pack_bg.wasm', import.meta.url);
+    }
+    // ...
+    if (typeof input === 'string' || (typeof Request === 'function' &amp;&amp; input instanceof Request) || (typeof URL === 'function' &amp;&amp; input instanceof URL)) {
+        input = fetch(input);
+    }
+
+    const {instance, module} = await load(await input, imports);
+
+    wasm = instance.exports;
+    init.__wbindgen_wasm_module = module;
+
+    return wasm;
+}
+
+export default init;
+</code></pre>
+<p>Ce qui permet d'importer la function <code>hi_mate</code> dans notre script JS comme s'il s'agissait d'une fonction exportée depuis
+un module NPM. La preuve par le code :</p>
+<pre><code class="language-html">
+&lt;script type=&quot;module&quot;&gt;
+    import init, {hi_mate} from &quot;./pkg/simple_example_with_wasm_pack.js&quot;;
+
+    init().then(() =&gt; {
+        hi_mate()
+    });
+&lt;/script&gt;
+</code></pre>
+<p>Et lorsqu'un serveur est lancé pour servir le fichier HTML et que l'on ouvre le navigateur. Il y a bien une fenêtre
+<code>prompt</code> qui demande d'insérer un nom puis une fenêtre alert qui affiche un greeting avec le nom.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="wasm-sans-le-navigateur"><a class="header" href="#wasm-sans-le-navigateur">Wasm sans le navigateur</a></h2>
+<p>Après avoir vu comment écrire et utiliser des modules wasm dans le navigateur, avec et sans outillage, il est temps de
+voir toutes les potentialités de wasm. Parce que wasm est une stack-based virtual machine et peut donc s'interfacer avec
+n'importe quel matériel et n'importe quel OS pour peu que ce dernier embarque un wasm runtime.</p>
+<h3 id="wasm-runtime"><a class="header" href="#wasm-runtime">Wasm runtime</a></h3>
+<p>Après avoir compilé un module wasm vers un binaire wasm, il faut que la machine hôte puisse exécuter ce binaire et donc
+comprendre les instructions qui lui sont passées. Un des points fort de Wasm est la portabilité. Cela signifie que
+l'exécution d'un binaire wasm aura un résultat prédictible peu importe l'OS sur lequel il est exécuté.</p>
+<p>Mais pour arriver à ce résultat, il faut bien un outil (runtime) qui est capable de comprendre les instructions
+contenues dans le binaire et de faire le lien avec les fonctions natives de l'OS. Par exemple, lire un stream, charger
+un buffer en mémoire, donner accès au filesystem. La liste est longue.</p>
+<p>Voici une liste non exhaustive des runtimes pour WebAssembly qui existent :</p>
+<ul>
+<li>wasmer</li>
+<li>wasmtime</li>
+<li>lucet</li>
+<li>WAMR - WebAssembly Micro Runtime</li>
+</ul>
+<p>Pour l'exemple de code, nous allons utiliser wasmer.</p>
+<h3 id="wasi"><a class="header" href="#wasi">WASI</a></h3>
+<p>Avant d'installer wasmer et d'exécuter notre module wasm, quelques précisions sur WASI.</p>
+<p>Dans le précédent paragraphe, il était question du runtime et de sa capacité à faire le lien entre le binaire wasm et
+les fonctions natives de l'OS. Pour que cela fonctionne sur la multitude d'OS et de hardware qui existe aujourd'hui, il
+faut un system interface, c'est-à-dire une API, qui expose la façon dont l'OS accède, par exemple, à la hiérarchie du
+filesystem.</p>
+<p>WASI est une initiative pour standardiser la façon dont les runtimes s'interfacent avec les OS, pour garantir une
+portabilité générique et assurer de la stabilité pour les outils qui s'appuient sur les runtimes wasm.</p>
+<h3 id="exemple-avec-du-code"><a class="header" href="#exemple-avec-du-code">Exemple avec du code</a></h3>
+<p>Enfin ! Nous allons pouvoir lancer un programme écrit en rust, compilé en binaire wasm et exécuter par wasmer(wasm
+runtime) sur une machine sans passer par le navigateur.</p>
+<h4 id="-prérequis--1"><a class="header" href="#-prérequis--1">🛠️ Prérequis 🛠️</a></h4>
+<ul>
+<li>Avoir installé <a href="https://github.com/wasmerio/wasmer#install">wasmer</a></li>
+<li>Avoir ajouté la target wasm32-wasi aves rustup, si ce n'est pas déjà fait, lancer la
+commande <code>rustup target add wasm32-wasi</code> dans un terminal</li>
+</ul>
+<h4 id="-coder-le-projet-"><a class="header" href="#-coder-le-projet-">🚧 Coder le projet 🚧</a></h4>
+<p>Lancer la commande <code>cargo new simple-example-with-wasmer</code>. Cela créer le projet, cette fois, il ne s'agit pas d'une lib
+rust mais d'un exécutable. Le point d'entré est le fichier <code>main</code> et la fonction <code>main</code> va être exportée par défaut dans
+la target wasm.</p>
+<p>Dans le fichier <code>scr/main.rs</code> ajouter le code suivant :</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    println!(&quot;What's ye name?&quot;);
+    let mut buffer = String::from(&quot;&quot;);
+    let stdin = std::io::stdin();
+    stdin.read_line(&amp;mut buffer);
+    println!(&quot;Ho hi, {}!&quot;, buffer.trim());
+}
+</code></pre></pre>
+<p>My, my! C'est du code Rust, pas de macro pour interagir avec le runtime wasm. On se sent comme à la maison, en
+charentaises et en peignoir au coin du feu.</p>
+<p>Pas de spécificité dans le <code>Cargo.toml</code> non plus :</p>
+<pre><code class="language-toml">[package]
+name = &quot;simple-example-with-wasmer&quot;
+version = &quot;0.1.0&quot;
+edition = &quot;2021&quot;
+
+[dependencies]
+</code></pre>
+<p>Il ne reste plus qu'à compiler le code rust vers la cible wasm-wasi :
+<code>cargo build --target wasm32-wasi --release</code>
+On retrouve le binaire produit dans le dossier <code>target</code></p>
+<pre><code class="language-text">.
+├── Cargo.lock
+├── Cargo.toml
+├── README.md
+├── src
+│  └── main.rs
+└── target
+   ├── CACHEDIR.TAG
+   ├── release
+   │  ├── build
+   │  ├── deps
+   │  ├── examples
+   │  └── incremental
+   └── wasm32-wasi
+      ├── CACHEDIR.TAG
+      └── release
+         ├── build
+         ├── deps
+         │  ├── simple_example_with_wasmer-11e993127ad92e3a.d
+         │  └── simple_example_with_wasmer-11e993127ad92e3a.wasm
+         ├── examples
+         ├── incremental
+         ├── simple-example-with-wasmer.d
+         └── simple-example-with-wasmer.wasm &lt;-- le binaire wasm est ici !
+</code></pre>
+<h4 id="-show-time-"><a class="header" href="#-show-time-">🙌 Show time 🙌</a></h4>
+<p>Lorsque la commande <code>wasmer run target/wasm32-wasi/release/simple-example-with-wasmer.wasm</code> le runtime wasm exécute le
+programme. Et c'est fait 🎉. On a notre premier programme compilé en wasm qui peut s'exécuter sur n'importe quelle
+machine qui embarque un runtime wasm.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="synthèse-sur-loutillage"><a class="header" href="#synthèse-sur-loutillage">Synthèse sur l'outillage</a></h2>
+<h3 id="loutillage-autour-de-wasm"><a class="header" href="#loutillage-autour-de-wasm">L'outillage autour de wasm</a></h3>
+<p>Revenons sur le schéma qui illustre les étapes de compilation
+<img src="./images/figure-2-0a.png" alt="compilation chain" /></p>
+<p>Dans le cas, de l'exemple de code Rust pour la partie browser cela donnerai quelque chose comme ceci
+<img src="./images/figure-2-4b.png" alt="compilation chain wasm pack" /></p>
+<p>Et pour l'exemple de code Rust sans le browser, voici le schéma
+<img src="./images/figure-2-4c.png" alt="compilation chain rust" /></p>
+<p>Ce que cela met en lumière, c'est que le process reste globalement le même et que cela n'impacte pas le développeur, à
+condition que les outils existent déjà et fonctionnent bien. Dans le cas de Rust, la communauté a fait un boulot
+incroyable et cela rend le développement de module wasm en Rust plaisant. Il y a d'autres langages qui sont bien
+outillés comme c/c++ avec emscriptem.</p>
+<p>Tout cela pour dire que c'est important d'avoir des notions, voire une compréhension totale de ce que sont les acronymes
+WAT, WASI, WASM. Mais les outils rendent possibles un certain niveau abstraction et permettent de developer rapidement
+des modules qui fonctionnent comme cela a été vu dans les exemples précédents. Pour retrouver, l'intégralité du code des
+exemples, il y a un <a href="https://github.com/nitame/mate-rust-wasm">repo</a> public.</p>
+<h3 id="pour-la-suite"><a class="header" href="#pour-la-suite">Pour la suite</a></h3>
+<p>Pour la suite, il serait intéressant de descendre encore dans les entrailles de wasm. Sans doute en commençant par
+explorer les spécifications du standard et coder en WAT pour mieux comprendre comment le binaire wasm est généré.</p>
+<p>Ensuite, peut-être faire un tour du côté du standard WASI et tenté d'implémenter un runtime wasm pour mieux comprendre
+les bindings entre wasm et le kernel.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="articles"><a class="header" href="#articles">Articles</a></h2>
+<ul>
+<li><a href="https://hacks.mozilla.org/2019/03/standardizing-wasi-a-webassembly-system-interface/">https://hacks.mozilla.org/2019/03/standardizing-wasi-a-webassembly-system-interface/</a></li>
+<li><a href="https://madewithwebassembly.com/showcase/autocad/">https://madewithwebassembly.com/showcase/autocad/</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/Module/imports">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WebAssembly/Module/imports</a></li>
+<li><a href="https://rustwasm.github.io/docs/book/game-of-life/hello-world.html">https://rustwasm.github.io/docs/book/game-of-life/hello-world.html</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/WebAssembly/Rust_to_wasm">https://developer.mozilla.org/en-US/docs/WebAssembly/Rust_to_wasm</a></li>
+<li><a href="https://blog.container-solutions.com/webassembly-in-the-cloud">https://blog.container-solutions.com/webassembly-in-the-cloud</a></li>
+<li><a href="https://www.amazon.science/blog/how-prime-video-updates-its-app-for-more-than-8-000-device-types">https://www.amazon.science/blog/how-prime-video-updates-its-app-for-more-than-8-000-device-types</a></li>
+<li><a href="https://alexene.dev/2020/08/17/webassembly-without-the-browser-part-1.html">https://alexene.dev/2020/08/17/webassembly-without-the-browser-part-1.html</a></li>
+</ul>
+<h2 id="podcast"><a class="header" href="#podcast">Podcast</a></h2>
+<ul>
+<li><a href="https://electro-monkeys.fr/64-la-face-cachee-de-webassembly-avec-geoffroy-couprie-et-ivan-enderline/">https://electro-monkeys.fr/64-la-face-cachee-de-webassembly-avec-geoffroy-couprie-et-ivan-enderline/</a></li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        <script type="text/javascript">
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+    </body>
+</html>
