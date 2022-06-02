@@ -1,4 +1,4 @@
-# Notes
+# WASM - les bindings pour produire du binaire wasm
 
 ## différence entre register machine et stack machine
 
@@ -45,3 +45,22 @@ segmented memory
 
 wasm utilise le model linear memory. Cela signifie qu'il faut gérer l'espace mémoire que l'on veut allouer pour le
 programme à la main. La memoire peut être étendue ou rétrécie si nécessaire, mais cela ne se fait pas automatiquement.
+
+## ecrire un programme en WAT
+
+### le programme
+
+il s'agit d'écrire un programme qui prend en entré des heures et des minutes et qui donne en sortie l'heure au format
+hh:mm
+
+### conception et outils
+
+### import dans le navigateur web
+
+### gestion de la mémoire
+
+## Utiliser un langage haut niveau pour cibler Wasm
+
+### Réécrire the clock en Rust
+
+### outils et écosytème Rust+Wasm

@@ -13,5 +13,7 @@
   - [Les outils Rust+Wasm](./chapter2-2.md)
   - [Wasm sans le navigateur](./chapter2-3.md)
   - [Synthèse sur l'outillage](./chapter2-4.md)
+- [deep dive wasm browser](./chapter3-0.md)
+- [deep dive wasi](./chapter4-0.md)
 
 [Liens et sources](./bibliographie.md)
